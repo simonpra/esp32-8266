@@ -1,10 +1,13 @@
+#########################################
+### NOT YET READY #######################
+#########################################
 from network import WLAN, STA_IF
 from ntptime import settime
 # import picoweb
 
 def connect():
-    ssid = "PrakyNet"
-    password =  "cestunjolireseauwifi"
+    ssid = "YOUR SSID"
+    password =  "YOUR PASSWORD"
 
     station = WLAN( STA_IF )
 
