@@ -9,7 +9,7 @@ I do want to do everything from the VSCODE IDE and terminal.
 ### Prerequisite
 
 > [\*] VSCODE <br>
-> [\*] Python 3 with PIP
+> [\*] Python 3 with PIP <small>_(< 3.10 because rshell doesn't support it)_</small>
 
 ### Installation
 
@@ -37,7 +37,7 @@ Usefull to have IntelliSense & Linting specific to micropython into the IDE. It 
 pip install --upgrade micropy-cli
 ```
 
-and then searching for stubs using micropy : _(change `esp32` with `esp8266` depending on your chip)_
+and then searching for stubs using micropy : <small>_(change `esp32` with `esp8266` depending on your chip)_</small>
 
 ```
 micropy stubs search esp32
@@ -53,7 +53,7 @@ micropy stubs search esp32
     MicroPy  esp32-micropython-1.9.4
 ```
 
-Installing the stubs for the ESP8266 : _(change `esp32` with `esp8266` depending on your chip)_
+Installing the stubs for the ESP32 : <small>_(change `esp32` with `esp8266` depending on your chip)_</small>
 
 ```
 micropy stubs add esp32-micropython-1.15.0
@@ -72,7 +72,7 @@ After closing and reopening VScode, you could be ask to install or activate some
 
 ### USB installation
 
-Make sur to have the good USBtoUART driver.Check the USB chip on your board for ID reference.
+Make sur to have the good USBtoUART driver. Check the USB chip on your board for ID reference.
 
 <img src="_docs\imgs\usb_chip_silicon-labs.jpg">
 
@@ -100,8 +100,9 @@ In my case its **/dev/cu.SLAB_USBtoUART**
 **[esptool.py](https://github.com/espressif/esptool)**<br>
 esptool let you manipulate different ESP chips.<br>
 You can get infos about your chip using :
-> _(remember to change the port to yours)_<br>
-> _(change `esp32` with `esp32-c3` or `esp8266` or `...` depending on your chip)_
+
+> - _(remember to change the port to yours)_<br>
+> - _(change `esp32` with `esp32-c3` or `esp8266` or `...` depending on your chip)_
 
 ```
 esptool.py --chip esp32 --baud 115200 --port /dev/cu.SLAB_USBtoUART --no-stub flash_id
