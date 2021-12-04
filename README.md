@@ -11,7 +11,8 @@ I do want to do everything from the VSCODE IDE and terminal.
 > [\*] VSCODE <br>
 > [\*] Python 3 with PIP <small>_(< 3.10 because rshell doesn't support it)_</small>
 
-### Installation
+<br><br>
+## Installation
 
 **Rshell**<br>
 [https://github.com/dhylands/rshell](https://github.com/dhylands/rshell)<br>
@@ -68,9 +69,9 @@ micropy init
 <img src="_docs\imgs\micropy-init.jpg">
 
 After closing and reopening VScode, you could be ask to install or activate some other extensions (pyLint, Intellisense, ...)
-<br><br>
 
-### USB installation
+<br><br>
+## USB installation
 
 Make sur to have the good USBtoUART driver. Check the USB chip on your board for ID reference.
 
@@ -78,7 +79,8 @@ Make sur to have the good USBtoUART driver. Check the USB chip on your board for
 
 Here is the 2104 from SiliconLabs. You can download and install VCP Drivers for SiliconLabs Chips 210x on https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers
 
-### Getting the port
+<br><br>
+## Getting the port
 
 **Windows** <br>
 In the Device Manager, it should appear under _ports_
@@ -95,30 +97,52 @@ ls /dev/*SLAB*
 
 In my case its **/dev/cu.SLAB_USBtoUART**
 
-### Firmeware
+<br><br>
+## Firmeware
+
+**MicroPython**<br>
+get the latest micropython firmeware for your chip here :<br>
+[https://micropython.org/download/](https://micropython.org/download/)
+
+> you can get informations about your chip using **esptool.py**<br>
+> it will scan different USB port and give you the correct port to use later
+```
+./esptool.py flash_id
+```
 
 **[esptool.py](https://github.com/espressif/esptool)**<br>
 esptool let you manipulate different ESP chips.<br>
 You can get infos about your chip using :
 
 > - _(remember to change the port to yours)_<br>
-> - _(change `esp32` with `esp32-c3` or `esp8266` or `...` depending on your chip)_
+> - _(change `esp32` with `esp32c3` or `esp8266` or `...` depending on your chip)_
+> - _CHANGE the BINARY filename ACCORDING to YOURS !_
 
 ```
-esptool.py --chip esp32 --baud 115200 --port /dev/cu.SLAB_USBtoUART --no-stub flash_id
+./esptool.py flash_id
 ```
 
 Before installing micropython on the chip, make sur to erase it : _(remember to change the port to yours)_
 
 ```
-esptool.py --chip esp32 --baud 115200 --port /dev/cu.SLAB_USBtoUART erase_flash
+./esptool.py --chip esp32 --baud 115200 --port /dev/cu.SLAB_USBtoUART erase_flash
 ```
 And finaly you can upload the firmeware for micropython into the chip :
 
 ```
-esptool.py --chip esp32 --port /dev/cu.SLAB_USBtoUART --baud 460800 write_flash -z 0x1000 esp32-20210902-v1.17.bin
+./esptool.py --chip esp32 --port /dev/cu.SLAB_USBtoUART --baud 460800 write_flash -z 0x1000 esp32-20210902-v1.17.bin
+```
+> if your chip is an ESP32-**C3**, it need to write the flash starting @ 0x00 !! <br>
+> => [https://community.m5stack.com/topic/3733/micropython-on-m5stamp-c3](https://community.m5stack.com/topic/3733/micropython-on-m5stamp-c3) <br>
+> => [https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/api-guides/bootloader.html](https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/api-guides/bootloader.html)
+
+```
+./esptool.py -p COMx -b 1000000 --before default_reset erase_flash
+
+./esptool.py -p COMx -b 1500000 --before default_reset write_flash -z 0x0 esp32c3-20210902-v1.17.bin
 ```
 
+<br><br>
 ## Ref.
 
 [https://lemariva.com/blog/2019/08/micropython-vsc-ide-intellisense](https://lemariva.com/blog/2019/08/micropython-vsc-ide-intellisense)<br>

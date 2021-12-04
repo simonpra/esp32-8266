@@ -1,4 +1,7 @@
 # This is your main script.
+#########################################
+### NOT YET READY #######################
+#########################################
 from time import sleep
 from machine import Pin
 
@@ -15,6 +18,6 @@ led = Pin(2, Pin.OUT)
 
 while True:
     led.value( 0x0 )
-    sendTemp( 'https://www.ized.ch/temp/temperature/' )
+    sendTemp( 'https://example.com' )
     led.value( 0x1 )
     sleep(59)

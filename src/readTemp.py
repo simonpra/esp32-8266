@@ -1,3 +1,6 @@
+#########################################
+### NOT YET READY #######################
+#########################################
 import usocket as socket
 import ussl
 from machine import Pin, I2C
@@ -34,9 +37,7 @@ def sendTemp( url ) :
 
     ### variables GET
     get = str(
-        '?t='+ str( 'readTemp()' ) +
-        '&ms='+ str( time() ) +
-        '&ssid=PrakyNet'
+        '?t='+ str( 'readTemp()' )
     )
 
     path = path + get
@@ -50,7 +51,6 @@ def sendTemp( url ) :
         % (path, host)
     )
 
-    #addr = socket.getaddrinfo('www.google.com' , 443)[0][-1]
     print( addr )
     ### SSL pour HTTPS
     s = socket.socket(  )
