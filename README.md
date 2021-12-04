@@ -37,9 +37,42 @@ Usefull to have IntelliSense & Linting specific to micropython into the IDE. It 
 pip install --upgrade micropy-cli
 ```
 
+and then searching for stubs using micropy : _(change `esp32` with `esp8266` depending on your chip)_
+
+```
+micropy stubs search esp32
+```
+```
+    MicroPy  Searching Stub Repositories...
+
+    MicroPy  Results for esp32:
+    MicroPy  esp32-micropython-1.10.0
+    MicroPy  esp32-micropython-1.11.0
+    MicroPy  esp32-micropython-1.12.0
+    MicroPy  esp32-micropython-1.15.0
+    MicroPy  esp32-micropython-1.9.4
+```
+
+Installing the stubs for the ESP8266 : _(change `esp32` with `esp8266` depending on your chip)_
+
+```
+micropy stubs add esp32-micropython-1.15.0
+```
+
+Now is time to init ^^<br>
+(this will create a `.micropy` folder containing the stubs and a folder for dependecies)
+
+```
+micropy init
+```
+<img src="_docs\imgs\micropy-init.jpg">
+
+After closing and reopening VScode, you could be ask to install or activate some other extensions (pyLint, Intellisense, ...)
+<br><br>
+
 ### USB installation
 
-Make sur to have the good USBtoUART driver.Check the USB chip on your board for ID référence.
+Make sur to have the good USBtoUART driver.Check the USB chip on your board for ID reference.
 
 <img src="_docs\imgs\usb_chip_silicon-labs.jpg">
 
@@ -62,13 +95,39 @@ ls /dev/*SLAB*
 
 In my case its **/dev/cu.SLAB_USBtoUART**
 
+### Firmeware
+
+**[esptool.py](https://github.com/espressif/esptool)**<br>
+esptool let you manipulate different ESP chips.<br>
+You can get infos about your chip using :
+> _(remember to change the port to yours)_<br>
+> _(change `esp32` with `esp32-c3` or `esp8266` or `...` depending on your chip)_
+
+```
+esptool.py --chip esp32 --baud 115200 --port /dev/cu.SLAB_USBtoUART --no-stub flash_id
+```
+
+Before installing micropython on the chip, make sur to erase it : _(remember to change the port to yours)_
+
+```
+esptool.py --chip esp32 --baud 115200 --port /dev/cu.SLAB_USBtoUART erase_flash
+```
+And finaly you can upload the firmeware for micropython into the chip :
+
+```
+esptool.py --chip esp32 --port /dev/cu.SLAB_USBtoUART --baud 460800 write_flash -z 0x1000 esp32-20210902-v1.17.bin
+```
+
 ## Ref.
 
 [https://lemariva.com/blog/2019/08/micropython-vsc-ide-intellisense](https://lemariva.com/blog/2019/08/micropython-vsc-ide-intellisense)<br>
 [https://lemariva.com/blog/2018/03/tutorial-installing-dependencies-on-micropython](https://lemariva.com/blog/2018/03/tutorial-installing-dependencies-on-micropython)
 
-ESP8266 micropython firmware<br>
-[https://docs.micropython.org/en/latest/tutorial/intro.html#intro](https://docs.micropython.org/en/latest/tutorial/intro.html#intro)
+USB Driver for M5stack<br>
+[https://github.com/Xinyuan-LilyGO/LilyGo-T-Call-SIM800/issues/139#issuecomment-904390716](https://github.com/Xinyuan-LilyGO/LilyGo-T-Call-SIM800/issues/139#issuecomment-904390716)
+
+Micropython firmware<br>
+[https://micropython.org/download/](https://micropython.org/download/)
 
 Webserver<br>
 [https://randomnerdtutorials.com/esp32-esp8266-micropython-web-server/](https://randomnerdtutorials.com/esp32-esp8266-micropython-web-server/)
